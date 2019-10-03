@@ -1,6 +1,8 @@
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +14,10 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
-public class Step5 {
+import Helper.ImageCompare;
+import Helper.Screenshot;
+
+public class Step6 {
 
 	WebDriver driver;
 	Actions action;
@@ -41,14 +46,20 @@ public class Step5 {
 		signup.confirm();
 		signup.clickeNextButton();
 		DemoLoginPage login = PageFactory.initElements(driver, DemoLoginPage.class);
+		Screenshot.screenshot(driver);
 		login.userLoginEntry("Username");
 		login.passwordLoginEntry("Password");
 		login.clickeNextButton();
-		
+		Screenshot.screenshot(driver);
 		WebElement myElement = driver
 				.findElement(By.xpath("/html/body/table/tbody/tr/td[1]/big/blockquote/blockquote/font/center/b"));
 		assertEquals("Expected Login successful", "**Successful Login**", myElement.getText());
-
+		try {
+			ImageCompare.compare();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
